@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.createViewModelLazy
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +20,12 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MapFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MapFragment : Fragment() {
+
+class MapFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var googlemap: MapView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +39,12 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var rootView: View?=inflater.inflate(R.layout.fragment_map, container, false)
+        googlemap = rootView?.findViewById(R.id.mapView)
+        googlemap?.onCreate(savedInstanceState);
+        googlemap?.getMapAsync(this)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return rootView
     }
 
     companion object {
@@ -55,5 +65,45 @@ class MapFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if(googlemap!=null){
+            googlemap?.onCreate(savedInstanceState)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        googlemap?.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        googlemap?.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        googlemap?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        googlemap?.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        googlemap?.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        googlemap?.onDestroy()
+        super.onDestroy()
     }
 }
