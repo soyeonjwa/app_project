@@ -94,6 +94,11 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                     val settingFragment = SettingFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                 }
+                R.id.forth -> {
+                    val boardFragment =BoardFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
+
+                }
             }
             true
         }

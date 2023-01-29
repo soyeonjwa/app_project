@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="제목" />
+        <EditText
+            android:id="@+id/title_et"
+            android:padding="16dp"
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="제목을 입력하세요."
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/find"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:text="물건을 찾았어요" />
+
+        <CheckBox
+            android:id="@+id/lost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="물건을 잃어버렸어요" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="제품명" />
+        <EditText
+            android:id="@+id/product_name"
+            android:padding="16dp"
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="제품명을 입력하세요."
+            />
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/place_addres"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#eeeeee"
+            android:hint="물건을 찾은 위치/잃어버린 위치"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/findLocationBtn"
+            android:layout_width="67dp"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:text="검색"
+            android:textSize="11.2sp" />
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="내용" />
+
+    <Button
+        android:id="@+id/upload_image"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+        android:text="제품의 사진을 업로드 해주세요." />
+
+    <EditText
+        android:id="@+id/content_et"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#eeeeee"
+        android:hint="내용을 입력하세요."
+        />
+
+    <Button
+        android:id="@+id/reg_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="등록하기"
+        android:textColor="#FFFFFF"
+        android:background="#C62828"/>
+
+
+</LinearLayout>
