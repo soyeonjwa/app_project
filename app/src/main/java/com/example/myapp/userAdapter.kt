@@ -1,23 +1,26 @@
 package com.example.myapp
 
+import android.app.Activity
+import android.app.PendingIntent.getActivity
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapp.databinding.FragmentChattingBinding
+import com.example.myapp.databinding.UserLayoutBinding
 
-class userAdapter(private val context: ChattingFragment, private val userList: ArrayList<User>):
+
+class userAdapter(val userList: ArrayList<User>, val context: Context):
 RecyclerView.Adapter<userAdapter.userViewHolder>(){
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): userViewHolder {
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false)
-
-        return userViewHolder(view as ActionMenuItemView)
-
+        return userViewHolder(UserLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -27,12 +30,29 @@ RecyclerView.Adapter<userAdapter.userViewHolder>(){
 
     override fun onBindViewHolder(holder: userViewHolder, position: Int) {
 
+        val binding = holder.binding
+
         val currentUser = userList[position]
-        holder.nameText.text = currentUser.name
+
+        binding.nameText.text = currentUser.name
+
+        binding.itemRoot.setOnClickListener {
+
+
+            val intent = Intent(context, ChattingActivity::class.java)
+            intent.putExtra("name", currentUser.name)
+            intent.putExtra("uId", currentUser.uId)
+            context.startActivity(intent)
+
+
+        }
+
     }
 
-    class userViewHolder(itemView: ActionMenuItemView): RecyclerView.ViewHolder(itemView){
+    inner class userViewHolder(val binding:UserLayoutBinding): RecyclerView.ViewHolder(binding.root){
 
-        val nameText : TextView = itemView.findViewById((R.id.name_text))
+        val nameText : TextView = binding.nameText
+
+
     }
 }
