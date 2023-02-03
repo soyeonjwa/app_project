@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.board
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapp.databinding.FragmentBoardBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
+import com.example.myapp.Contents
+import com.example.myapp.R
 
 /**
  * A fragment representing a list of Items.
@@ -52,7 +51,7 @@ class BoardFragment : Fragment() {
 
         val fab: View = view.findViewById(R.id.FAB)
         fab.setOnClickListener {
-            val intent: Intent = Intent(this.context,BoardRegister::class.java)
+            val intent: Intent = Intent(this.context, BoardRegister::class.java)
             startActivity(intent)
         }
 

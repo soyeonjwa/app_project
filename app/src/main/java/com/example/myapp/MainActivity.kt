@@ -1,7 +1,6 @@
 package com.example.myapp
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -9,18 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.core.content.ContextCompat
+import com.example.myapp.board.BoardFragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnSuccessListener
 
 
 class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -73,9 +67,10 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
             when(it.itemId) {
                 R.id.first -> {
                     // 다른 행래그먼트 화면으로 이동하는 기능
-                    val boardFragment = ChattingFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
-
+                   // val boardFragment = ChattingFragment()
+                   // supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
+                    val settingFragment = SettingFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                     // Log.d("여기는 onCreate",currentLocation.latitude.toString()))
                     //val intent: Intent = Intent(context,LocationFinding::class.java)
                     //startActivity(intent)
@@ -95,7 +90,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                 }
                 R.id.forth -> {
-                    val boardFragment =BoardFragment()
+                    val boardFragment = BoardFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
 
                 }
