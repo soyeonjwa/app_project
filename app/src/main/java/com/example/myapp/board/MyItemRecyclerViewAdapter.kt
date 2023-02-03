@@ -1,16 +1,13 @@
-package com.example.myapp
+package com.example.myapp.board
 
-import android.media.Image
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import com.example.myapp.Contents
 
 import com.example.myapp.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.myapp.databinding.FragmentBoardBinding
-import org.w3c.dom.Text
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].

@@ -82,7 +82,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/place_addres"
+            android:id="@+id/location"
             android:layout_width="339dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
