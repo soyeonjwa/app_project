@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,25 +37,23 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-        <CheckBox
-            android:id="@+id/find"
-            android:layout_width="187dp"
+        <RadioButton
+            android:id="@+id/find2"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:text="물건을 찾았어요" />
-
-        <CheckBox
-            android:id="@+id/lost"
+        <RadioButton
+            android:id="@+id/lost2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="물건을 잃어버렸어요" />
-
-    </LinearLayout>
+            android:text="물건을 잃어버렸어요"/>
+    </RadioGroup>
 
 
 
@@ -59,19 +66,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="제품명" />
-        <EditText
-            android:id="@+id/product_name"
-            android:padding="16dp"
-            android:background="#eeeeee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="제품명을 입력하세요."
-            />
+            android:text="카테고리" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="293dp"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown"/>
 
     </LinearLayout>
-
 
 
 
@@ -101,37 +104,74 @@
     </LinearLayout>
 
 
-
-
     <TextView
         android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="내용" />
 
+    <ImageView
+        android:id="@+id/image_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
     <Button
         android:id="@+id/upload_image"
         android:layout_width="382dp"
         android:layout_height="wrap_content"
-        android:text="제품의 사진을 업로드 해주세요." />
+        android:text="제품의 사진을 업로드 해주세요."
+        android:visibility="visible" />
 
-    <EditText
-        android:id="@+id/content_et"
-        android:padding="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#eeeeee"
-        android:hint="내용을 입력하세요."
-        />
-
-    <Button
-        android:id="@+id/reg_button"
+    <LinearLayout
+        android:id="@+id/imageBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="등록하기"
-        android:textColor="#FFFFFF"
-        android:background="#C62828"/>
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/camera"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:text="사진찍기"
+            android:layout_marginRight="2dp"/>
+
+        <Button
+            android:id="@+id/gallery"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:text="갤러리에서 가져오기" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/board_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ImageView>
+
+
+        <EditText
+            android:id="@+id/content_et"
+            android:layout_width="match_parent"
+            android:layout_height="336dp"
+            android:layout_weight="1"
+            android:background="#eeeeee"
+            android:hint="내용을 입력하세요."
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/reg_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C62828"
+            android:text="등록하기"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+    </ScrollView>
+
+
 
 
 </LinearLayout>

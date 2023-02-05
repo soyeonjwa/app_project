@@ -5,6 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.Spinner
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +22,7 @@ import com.example.myapp.R
 class BoardFragment : Fragment() {
     private val dataSet: ArrayList<Contents> = arrayListOf()
     private val rvAdapter= MyItemRecyclerViewAdapter(dataSet)
+    lateinit var spinner: Spinner
 
 
     private var columnCount = 1
@@ -54,6 +60,23 @@ class BoardFragment : Fragment() {
             val intent: Intent = Intent(this.context, BoardRegister::class.java)
             startActivity(intent)
         }
+
+        spinner = view.findViewById(R.id.spinner2)
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(this.context!!,R.array.category_array,android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.setSelection(0)
+
+        val fabSearch:View = view.findViewById(R.id.FAB_search)
+        val searchBar:View = view.findViewById(R.id.search_bar)
+        fabSearch.setOnClickListener{
+            if(searchBar.isGone){
+                searchBar.visibility=View.VISIBLE
+            }
+            else{
+                searchBar.visibility = View.GONE
+            }
+        }
+
 
         return view
 

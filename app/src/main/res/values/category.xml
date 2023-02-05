@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_array">
+        <item>전자 제품</item>
+        <item>의류/가방</item>
+        <item>귀금속</item>
+        <item>지갑</item>
+        <item>카드/현금</item>
+        <item>기타</item>
+    </string-array>
+</resources>
