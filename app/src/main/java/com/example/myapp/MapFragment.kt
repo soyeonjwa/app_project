@@ -17,17 +17,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton
 import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import com.example.myapp.board.BoardRegister
+import com.google.android.gms.common.api.Status
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -42,6 +46,11 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -60,7 +69,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var googlemap: MapView?=null
     private var currentLocation: LatLng?=null
-
+    private var autocompleteSupportFragment: AutocompleteSupportFragment?=null
+    private var currentLocationBtn:FloatingActionButton ?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,25 +95,69 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         Log.d("onCreateView 실행","onCreateView 실행")
         var rootView: View=inflater.inflate(R.layout.fragment_map, container, false)
+
+        currentLocationBtn =rootView.findViewById(R.id.current_location_btn)
+
         googlemap = rootView.findViewById(R.id.mapView)
         googlemap?.onCreate(savedInstanceState);
         googlemap?.getMapAsync(this)
         // Inflate the layout for this fragment
+
+        if (!Places.isInitialized()) {
+            Places.initialize(this.context!!, "AIzaSyBRoZ4lT6rZJlAw72BB9hYtvYjOcr4GatQ")
+        }
+        val placesClient = Places.createClient(this.context!!)
+
+
+        autocompleteSupportFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment2) as AutocompleteSupportFragment?
+
+        autocompleteSupportFragment?.setPlaceFields(
+            listOf(
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG
+            )
+        )
+        autocompleteSupportFragment?.setCountry("KR");
+
         return rootView
     }
 
 
     override fun onMapReady(googleMap:GoogleMap) {
-        Log.d("onMapReady 실행","onMapReady 실행")
-   /*     val circle1KM = CircleOptions().center(currentLocation) //원점
-            .radius(1000.0) //반지름 단위 : m
-            .strokeWidth(0f) //선너비 0f : 선없음
-            .fillColor(Color.parseColor("#880000ff")) //배경색*/
+        /*     val circle1KM = CircleOptions().center(currentLocation) //원점
+                 .radius(1000.0) //반지름 단위 : m
+                 .strokeWidth(0f) //선너비 0f : 선없음
+                 .fillColor(Color.parseColor("#880000ff")) //배경색*/
 
 
+        autocompleteSupportFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+
+                val name = place.name
+                val address = place.address
+                val latlng = place.latLng
+
+                Log.d("위치 검색 실행","Name: $name \nAddress: $address\nLatLng: $latlng")
+
+                googleMap.addMarker(MarkerOptions().position(latlng!!).title(name))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng))
+                googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+            }
+            override fun onError(status: Status) {
+                Log.d("키보드??","$status")
+            }
+        })
+
+        currentLocationBtn?.setOnClickListener{
+            googleMap.addMarker(MarkerOptions().position(currentLocation!!).title("현재 위치"))
+            // googleMap.addCircle(circle1KM)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+        }
 
         googleMap.addMarker(MarkerOptions().position(currentLocation!!).title("현재 위치"))
-       // googleMap.addCircle(circle1KM)
+        // googleMap.addCircle(circle1KM)
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
     }
