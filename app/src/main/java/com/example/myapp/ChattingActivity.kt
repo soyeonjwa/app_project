@@ -3,6 +3,7 @@ package com.example.myapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.databinding.ActivityChattingBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -88,6 +89,7 @@ class ChattingActivity : AppCompatActivity() {
                     }
 
                     messageAdapter.notifyDataSetChanged()
+                    Toast.makeText(this@ChattingActivity,"sd", Toast.LENGTH_SHORT)
 
                 }
 
