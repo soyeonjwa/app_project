@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.login.LoginActivity">
+    tools:context="LoginActivity">
 
     <EditText
         android:id="@+id/email"
@@ -45,7 +45,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
-        android:enabled="false"
+        android:backgroundTint="@color/black"
         android:text="sign in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,12 +55,12 @@
 
     <Button
         android:id="@+id/register"
-        android:layout_width="168dp"
-        android:layout_height="48dp"
+        android:layout_width="175dp"
+        android:layout_height="47dp"
         android:layout_gravity="start"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
-        android:enabled="false"
+        android:backgroundTint="@color/black"
         android:text="register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

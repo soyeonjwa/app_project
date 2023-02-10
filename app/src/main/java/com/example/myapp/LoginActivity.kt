@@ -1,24 +1,12 @@
-package com.example.myapp.ui.login
+package com.example.myapp
 
-import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.Toast
-import com.example.myapp.MainActivity
 import com.example.myapp.databinding.ActivityLoginBinding
 
-import com.example.myapp.R
-import com.example.myapp.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -37,35 +25,27 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val username = binding.username
-        val password = binding.password
-        val login = binding.login
-        val register = binding.register
-        val loading = binding.loading
 
         //인증 초기화
         mAuth = Firebase.auth
-
         //db 초기화
         dbRef = Firebase.database.reference
 
         //로그인 버튼 이벤트
-       login.setOnClickListener {
+        binding.login.setOnClickListener {
 
-           val email = binding.email.toString()
-           val password = binding.password.toString()
+           val email = binding.email.text.toString()
+           val password = binding.password.text.toString()
 
            login(email, password)
         }
 
-        register?.setOnClickListener {
+        binding.register.setOnClickListener {
 
             val intent:Intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
 
         }
-
-
 
 
 
@@ -83,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(this, "로그인 실", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, password + " 로그인 실패", Toast.LENGTH_SHORT).show()
                     Log.d("Login", "Error: ${task.exception}")
                 }
             }
