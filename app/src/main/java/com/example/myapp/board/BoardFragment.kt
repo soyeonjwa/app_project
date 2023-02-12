@@ -1,6 +1,7 @@
 package com.example.myapp.board
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -35,9 +38,11 @@ class BoardFragment : Fragment() {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
-        rvAdapter.addData("좌소연","마르지엘라 지갑 잃어버렸어요.","어제 연남동에서 술마시다가 잃어버림ㅠㅠ","연남동",proceeding = true)
-        rvAdapter.notifyDataSetChanged()
-        rvAdapter.addData("좌소연","마르지엘라 지갑 잃어버렸어요.","어제 연남동에서 술마시다가 잃어버림ㅠㅠ","연남동",proceeding = false)
+        val drawable = ResourcesCompat.getDrawable(resources, com.example.myapp.R.drawable.abcd, null)
+        val bitmap = (drawable as BitmapDrawable?)!!.bitmap
+
+
+        rvAdapter.addData("좌소연","마르지엘라 지갑 잃어버렸어요.","어제 연남동에서 술마시다가 잃어버림ㅠㅠ","연남동",proceeding = true, category = "전자 제품", image = bitmap)
         rvAdapter.notifyDataSetChanged()
 
     }

@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
             when(it.itemId) {
                 R.id.first -> {
                     // 다른 행래그먼트 화면으로 이동하는 기능
-                   // val boardFragment = ChattingFragment()
-                   // supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
+                    // val boardFragment = ChattingFragment()
+                    // supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
                     val settingFragment = SettingFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                     // Log.d("여기는 onCreate",currentLocation.latitude.toString()))
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                     //startActivity(intent)
                 }
                 R.id.second -> {
-                   Log.d("1fragment 실행","1")
+                    Log.d("1fragment 실행","1")
                     var bundle = Bundle()
                     Log.d("정보 보낼 준비 실행","$latitude+$longitude")
                     bundle.putDouble("latitude",latitude!!.toDouble())

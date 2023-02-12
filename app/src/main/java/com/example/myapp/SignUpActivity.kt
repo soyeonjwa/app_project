@@ -34,7 +34,7 @@ class SignUpActivity : AppCompatActivity() {
 
             val name = binding.name.text.toString().trim()
             val email = binding.email.text.toString().trim()
-            val password = binding.name.text.toString().trim()
+            val password = binding.password.text.toString().trim()
 
             signup(name, email, password)
         }
@@ -51,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
 
-                    val intent: Intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                    val intent: Intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     startActivity(intent)
                     adduserToDb(name, email, mAuth.currentUser?.uid!!)
                 } else {

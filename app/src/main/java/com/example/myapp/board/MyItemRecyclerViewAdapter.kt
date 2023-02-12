@@ -1,13 +1,17 @@
 package com.example.myapp.board
 
-import androidx.recyclerview.widget.RecyclerView
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Contents
-
-import com.example.myapp.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.myapp.databinding.FragmentBoardBinding
+import com.example.myapp.placeholder.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -22,13 +26,16 @@ class MyItemRecyclerViewAdapter(
         notifyItemRemoved(position)
     }
 
-    fun addData(name: String,
+    fun addData(
+                name: String,//id
                 title: String,
                 content: String,
                 location: String,
-                proceeding:Boolean
+                proceeding: Boolean,
+                category: String,
+                image: Bitmap
     ){
-        values.add(Contents(name,title,content,location,proceeding))
+        values.add(Contents(name,title,content,location,proceeding,category,image))
         notifyItemInserted(values.size)
     }
 
@@ -43,13 +50,28 @@ class MyItemRecyclerViewAdapter(
         holder.idView.text = item.title
         holder.contentView.text = item.content
         holder.locationView.text = item.location
+        holder.imageView.setImageBitmap(item.image)
         if(item.proceeding){
             holder.proceedingView.text="진행중"
         }
-        else{
-            holder.proceedingView.text="완료됨"
+        else {
+            holder.proceedingView.text = "완료됨"
         }
 
+
+        holder.itemView.setOnClickListener {
+            if(RecyclerView.NO_POSITION!=position){
+                val intent = Intent(holder.itemView?.context,BoardElement::class.java)
+                intent.putExtra("title",item.title)
+                intent.putExtra("content",item.content)
+                intent.putExtra("id",item.name)
+              //  intent.putExtra("image",item.image)
+                intent.putExtra("location",item.location)
+                intent.putExtra("proceeding",item.proceeding)
+                intent.putExtra("category",item.category)
+                ContextCompat.startActivity(holder.itemView.context,intent,null)
+            }
+        }
 
         //이미지 뷰는 어케 하는 거임?
     }
@@ -63,7 +85,10 @@ class MyItemRecyclerViewAdapter(
         val contentView: TextView = binding.content
         val locationView: TextView = binding.location
         val proceedingView: TextView = binding.proceeding
-      //  val imageView: ImageView = binding.imageIcon
+        val imageView: ImageView = binding.imageIcon
+
+
+
         /*
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
