@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/boardImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="382dp"
+        android:layout_height="318dp"
         android:layout_below="@+id/boardDate"
         android:src="@mipmap/ic_launcher" />
 
@@ -39,6 +39,15 @@
         android:layout_below="@+id/boardImage"
         android:textSize="20sp"/>
 
+    <TextView
+        android:id="@+id/boardLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="위치 입력하는 칸"
+        android:layout_below="@+id/boardTitle"
+        android:textSize="16sp"/>
+
+
 
 
     <LinearLayout
@@ -46,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/boardTitle">
+        android:layout_below="@+id/boardLocation">
 
         <TextView
             android:id="@+id/boardPreceeding"
@@ -63,21 +72,20 @@
 
     <TextView
         android:id="@+id/boardContent"
-        android:layout_width="384dp"
-        android:layout_height="164dp"
+        android:layout_width="395dp"
+        android:layout_height="226dp"
         android:layout_below="@+id/sub"
         android:text="내용을 입력하는 칸\n\n" />
 
-    <Button
-        android:id="@+id/chattingBtn"
-        android:layout_width="381dp"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/FAB_chatting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/boardContent"
-        android:layout_marginTop="-5dp"
-        android:text="채팅하기"
-        android:textColor="@color/black">
+        android:layout_margin="10dp"
+        app:icon="@drawable/ic_baseline_mail_outline_24"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
 
-    </Button>
 
 
 </RelativeLayout>

@@ -10,47 +10,34 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Contents
+import com.example.myapp.R
 import com.example.myapp.databinding.FragmentBoardBinding
 import com.example.myapp.placeholder.PlaceholderContent.PlaceholderItem
+import java.time.format.DateTimeFormatter
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-        private val values: ArrayList<Contents>)
+        private val context:Context)
     : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+    private var values = mutableListOf<Contents>()
 
-    fun removeData(position: Int){
-        values.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-    fun addData(
-                name: String,//id
-                title: String,
-                content: String,
-                location: String,
-                proceeding: Boolean,
-                category: String,
-                image: Bitmap
-    ){
-        values.add(Contents(name,title,content,location,proceeding,category,image))
-        notifyItemInserted(values.size)
+    fun setListData(data:MutableList<Contents>){
+        values = data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-    return ViewHolder(FragmentBoardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
+        return ViewHolder(FragmentBoardBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.title
-        holder.contentView.text = item.content
+        holder.titleView.text = item.title
         holder.locationView.text = item.location
-        holder.imageView.setImageBitmap(item.image)
+        //holder.imageView.setImageBitmap(item.image)
         if(item.proceeding){
             holder.proceedingView.text="진행중"
         }
@@ -61,7 +48,7 @@ class MyItemRecyclerViewAdapter(
 
         holder.itemView.setOnClickListener {
             if(RecyclerView.NO_POSITION!=position){
-                val intent = Intent(holder.itemView?.context,BoardElement::class.java)
+                val intent = Intent(holder.itemView.context,BoardElement::class.java)
                 intent.putExtra("title",item.title)
                 intent.putExtra("content",item.content)
                 intent.putExtra("id",item.name)
@@ -69,6 +56,7 @@ class MyItemRecyclerViewAdapter(
                 intent.putExtra("location",item.location)
                 intent.putExtra("proceeding",item.proceeding)
                 intent.putExtra("category",item.category)
+                intent.putExtra("dateTime",item.dateTime)
                 ContextCompat.startActivity(holder.itemView.context,intent,null)
             }
         }
@@ -81,18 +69,11 @@ class MyItemRecyclerViewAdapter(
     }
 
     inner class ViewHolder(binding: FragmentBoardBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.title
-        val contentView: TextView = binding.content
+        val titleView: TextView = binding.title
         val locationView: TextView = binding.location
         val proceedingView: TextView = binding.proceeding
         val imageView: ImageView = binding.imageIcon
 
-
-
-        /*
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }*/
     }
 
 }

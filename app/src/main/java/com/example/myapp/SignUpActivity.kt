@@ -63,7 +63,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun adduserToDb(name:String, email:String, uId:String){
-
         dbRef.child("user").child(uId).setValue(User(name, email, uId))
     }
 }

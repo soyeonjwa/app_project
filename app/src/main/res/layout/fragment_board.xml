@@ -30,12 +30,14 @@
                     android:id="@+id/imageIcon"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
@@ -48,38 +50,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="제목을 입력하세요." />
+                        android:text="위치" />
 
-                    <TextView
-                        android:id="@+id/content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="내용을 입력하세요."/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/imageIcon">
                     <TextView
                         android:id="@+id/location"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="위치"
-                        android:textSize="15sp"/>
+                        android:textSize="12sp"
+                        android:text="위치을 입력하세요."/>
 
                     <TextView
                         android:id="@+id/proceeding"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_gravity="end"
                         android:text="진행중" />
-
                 </LinearLayout>
+
 
             </RelativeLayout>
 

@@ -3,32 +3,49 @@ package com.example.myapp.board
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ListAdapter
+import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Contents
 import com.example.myapp.R
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 
 /**
  * A fragment representing a list of Items.
  */
 class BoardFragment : Fragment() {
-    private val dataSet: ArrayList<Contents> = arrayListOf()
-    private val rvAdapter= MyItemRecyclerViewAdapter(dataSet)
     lateinit var spinner: Spinner
-
-
     private var columnCount = 1
+
+    private lateinit var myadapter:MyItemRecyclerViewAdapter
+    private val viewModel by lazy{ViewModelProvider(this).get(ListViewModel::class.java)}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +54,6 @@ class BoardFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
-
-        val drawable = ResourcesCompat.getDrawable(resources, com.example.myapp.R.drawable.abcd, null)
-        val bitmap = (drawable as BitmapDrawable?)!!.bitmap
-
-
-        rvAdapter.addData("좌소연","마르지엘라 지갑 잃어버렸어요.","어제 연남동에서 술마시다가 잃어버림ㅠㅠ","연남동",proceeding = true, category = "전자 제품", image = bitmap)
-        rvAdapter.notifyDataSetChanged()
 
     }
 
@@ -55,10 +65,13 @@ class BoardFragment : Fragment() {
         if (dd is RecyclerView) {
             with(dd) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MyItemRecyclerViewAdapter(dataSet)
 
+                myadapter = MyItemRecyclerViewAdapter(context)
+                adapter = myadapter
+                observeData()
             }
         }
+
 
         val fab: View = view.findViewById(R.id.FAB)
         fab.setOnClickListener {
@@ -82,11 +95,50 @@ class BoardFragment : Fragment() {
             }
         }
 
+        val radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup2)
+        var finding =true
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.find2 -> finding = true
+                R.id.lost2 -> finding = false
+            }
+        }
+
+        val searchBtn: Button = view.findViewById(R.id.search_button)
+        searchBtn.setOnClickListener{
+            val text = view.findViewById<EditText>(R.id.search_et).text.toString()
+            searchData(text,spinner.selectedItem.toString(),finding)
+        }
 
         return view
 
 
     }
+
+    fun observeData(){
+        viewModel.fetchData().observe(viewLifecycleOwner, Observer {
+            myadapter.setListData(it)
+            myadapter.notifyDataSetChanged()
+        })
+    }
+
+
+    fun searchData(text:String,category:String,finding:Boolean){
+        viewModel.fetchData().observe(viewLifecycleOwner, Observer {
+            var dataset = mutableListOf<Contents>()
+            for(data in it){
+                if(data.finding==finding && data.category==category){
+                    if(text in data.location|| text in data.title){
+                        dataset.add(data)
+                    }
+
+                }
+            }
+            myadapter.setListData(dataset)
+            myadapter.notifyDataSetChanged()
+        })
+    }
+
 
     companion object {
 
