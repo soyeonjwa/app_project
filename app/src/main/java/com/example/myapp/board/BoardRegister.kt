@@ -170,7 +170,9 @@ class BoardRegister : AppCompatActivity() {
                 true,
                 category,
                 finding!!,
-                dateTime.format(DateTimeFormatter.ISO_DATE)
+                dateTime.format(DateTimeFormatter.ISO_DATE),
+                location!!.latitude,
+                location!!.longitude
             ))
 
             finish()

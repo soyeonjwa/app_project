@@ -69,8 +69,9 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                     // 다른 행래그먼트 화면으로 이동하는 기능
                     // val boardFragment = ChattingFragment()
                     // supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
-                    val settingFragment = SettingFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
+                    val boardFragment = BoardFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
+
                     // Log.d("여기는 onCreate",currentLocation.latitude.toString()))
                     //val intent: Intent = Intent(context,LocationFinding::class.java)
                     //startActivity(intent)
@@ -90,9 +91,8 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                     supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                 }
                 R.id.forth -> {
-                    val boardFragment = BoardFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, boardFragment).commit()
-
+                    val settingFragment = SettingFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
                 }
             }
             true

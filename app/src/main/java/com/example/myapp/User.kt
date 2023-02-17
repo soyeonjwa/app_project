@@ -26,4 +26,6 @@ data class Contents(
     var proceeding: Boolean=true,
     var category: String="",
     var finding: Boolean=true,
-    var dateTime: String = "")
+    var dateTime: String = "",
+    var lat: Double = 0.0,
+    var lng : Double = 0.0)
