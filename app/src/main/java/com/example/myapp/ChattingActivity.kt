@@ -48,6 +48,11 @@ class ChattingActivity : AppCompatActivity() {
         //접속자 Uid
         val senderUid = mAuth.currentUser?.uid
 
+        //채팅하고 있는 사람 정보 데이터베이스에 추가
+        mDbRef.child("user").child(senderUid.toString()).child("chattingUser").child(received_uId).setValue(1)
+        mDbRef.child("user").child(received_uId).child("chattingUser").child(senderUid.toString()).setValue(1)
+
+
         //sender room
         senderRoom = received_uId + senderUid
 
@@ -97,6 +102,8 @@ class ChattingActivity : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(this@ChattingActivity,"fail", Toast.LENGTH_SHORT).show()
                 }
+
+
 
 
             })

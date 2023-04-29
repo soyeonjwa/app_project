@@ -1,6 +1,7 @@
 package com.example.myapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,7 @@ import com.example.myapp.databinding.FragmentChattingBinding
 import com.example.myapp.databinding.FragmentMapBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -60,6 +58,21 @@ class ChattingFragment : Fragment() {
         binding.userRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.userRecyclerView.adapter = adapter
 
+        var chattingMem = ArrayList<String>()
+
+        val databaseRef = FirebaseDatabase.getInstance().reference.child("user").child(mAuth.currentUser?.uid.toString()).child("chattingUser")
+        databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (childSnapshot in dataSnapshot.children) {
+                    chattingMem.add(childSnapshot.key.toString())
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("aaa", "loadPost:onCancelled", databaseError.toException())
+
+            }
+        })
 
         mDbRef.child("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -68,7 +81,7 @@ class ChattingFragment : Fragment() {
 
                     val currentUser = postSnapshot.getValue(User::class.java)
 
-                    if(mAuth.currentUser?.uid != currentUser?.uId){
+                    if(currentUser?.uId in chattingMem){
                         userList.add(currentUser!!)
                     }
 
@@ -86,7 +99,6 @@ class ChattingFragment : Fragment() {
                 //Toast.makeText(this@ChattingFragment.requireActivity(), "fail", Toast.LENGTH_SHORT).show()
             }
         })
-
 
 
         return binding.root

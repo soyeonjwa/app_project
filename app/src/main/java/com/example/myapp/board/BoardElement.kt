@@ -1,16 +1,20 @@
 package com.example.myapp.board
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myapp.ChattingActivity
 import com.example.myapp.Contents
 import com.example.myapp.R
 import com.example.myapp.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,9 +40,10 @@ class BoardElement : AppCompatActivity() {
         var proceedingView = findViewById<TextView>(R.id.boardPreceeding)
         var dateView = findViewById<TextView>(R.id.boardDate)
         var locationView = findViewById<TextView>(R.id.boardLocation)
+        var fabChatting = findViewById<Button>(R.id.FAB_chatting)
+
 
         val id = intent.getStringExtra("id")
-
 
         val mDbRef = FirebaseDatabase.getInstance().reference
 
@@ -49,6 +54,7 @@ class BoardElement : AppCompatActivity() {
                     if(tmp==id.toString()){
                         var nowUser = user.getValue(User::class.java)
                         idView.text = nowUser?.name
+
                     }
                 }
 
@@ -91,6 +97,21 @@ class BoardElement : AppCompatActivity() {
         else{
             proceedingView.text = "완료됨"
         }
+
+        val boardOwner = FirebaseAuth.getInstance().currentUser?.uid
+        fabChatting.setOnClickListener{
+
+            if(id==boardOwner){
+                Toast.makeText(this,"자신과는 대화할 수 없어요ㅠㅠ",Toast.LENGTH_LONG).show()
+            }
+            else{
+                val intent: Intent = Intent(this, ChattingActivity::class.java)
+                intent.putExtra("name",idView.text)
+                intent.putExtra("uId",id.toString())
+                startActivity(intent)
+            }
+        }
+
 
 
     }
