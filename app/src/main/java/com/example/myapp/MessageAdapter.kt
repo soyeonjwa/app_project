@@ -1,6 +1,7 @@
 package com.example.myapp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class MessageAdapter(private val context : Context, private val messageList : Ar
         if(holder.javaClass == SendViewHolder::class.java){
             val viewHolder = holder as SendViewHolder
             viewHolder.sendMessage.text = currentMessage.message
+
         }
         //받는 데이터
         else {

@@ -114,7 +114,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,GoogleMap.OnMarkerClickListen
         // Inflate the layout for this fragment
 
         if (!Places.isInitialized()) {
-            Places.initialize(this.context!!, "AIzaSyBRoZ4lT6rZJlAw72BB9hYtvYjOcr4GatQ")
+            Places.initialize(this.context!!, "AIzaSyCvhfbJ4yJ4Nqj2V9LaDyWIfBYq8urL8I0")
         }
         val placesClient = Places.createClient(this.context!!)
 

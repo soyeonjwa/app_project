@@ -3,6 +3,7 @@ package com.example.myapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.databinding.ActivityChattingBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -84,15 +85,17 @@ class ChattingActivity : AppCompatActivity() {
                         val message = postSnapshat.getValue(com.example.myapp.Message::class.java)
                         messageList.add(message!!)
 
+                        //Toast.makeText(this@ChattingActivity,message.toString(), Toast.LENGTH_SHORT).show()
 
                     }
 
                     messageAdapter.notifyDataSetChanged()
+                    //Toast.makeText(this@ChattingActivity,"send", Toast.LENGTH_SHORT).show()
 
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    Toast.makeText(this@ChattingActivity,"fail", Toast.LENGTH_SHORT).show()
                 }
 
 

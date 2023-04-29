@@ -16,7 +16,7 @@ import com.example.myapp.databinding.UserLayoutBinding
 
 
 class userAdapter(val userList: ArrayList<User>, val context: Context):
-RecyclerView.Adapter<userAdapter.userViewHolder>(){
+    RecyclerView.Adapter<userAdapter.userViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): userViewHolder {
 

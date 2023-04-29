@@ -87,12 +87,8 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
 
                 }
                 R.id.third -> {
-                    val settingFragment = SettingFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
-                }
-                R.id.forth -> {
-                    val settingFragment = SettingFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, settingFragment).commit()
+                    val chattingFragment = ChattingFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_container, chattingFragment).commit()
                 }
             }
             true

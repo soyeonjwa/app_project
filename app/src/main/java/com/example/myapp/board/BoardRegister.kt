@@ -2,6 +2,7 @@ package com.example.myapp.board
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,14 +14,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.Contents
 import com.example.myapp.R
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 
 class BoardRegister : AppCompatActivity() {
@@ -40,8 +45,9 @@ class BoardRegister : AppCompatActivity() {
     lateinit var uploadBtn: Button
     lateinit var locationBtn: Button
     lateinit var imageButton: Button
-    //위치는 지도 검색 기능 추가한 다음에 추가
-    //사진은 사진 업로드 기능 추가한 다음에 추가
+
+    private var imageUri: Uri? = null
+
 
     val requestLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -69,6 +75,8 @@ class BoardRegister : AppCompatActivity() {
             // 이미지뷰에 Bitmap으로 이미지를 입력
             val imageview = findViewById<ImageView>(R.id.board_image)
             imageview.setImageBitmap(imageBitmap)
+
+            imageUri = getImageUriFromBitmap(imageBitmap!!)
         }
     }
 
@@ -76,12 +84,14 @@ class BoardRegister : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            val imageUri = result.data?.data
-            val imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver,imageUri)
+            val imUri = result.data?.data
+            val imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver,imUri)
             image = imageBitmap
 
             val imageview = findViewById<ImageView>(R.id.board_image)
             imageview.setImageBitmap(imageBitmap)
+
+            imageUri = imUri
         }
     }
 
@@ -163,6 +173,7 @@ class BoardRegister : AppCompatActivity() {
             val database = FirebaseDatabase.getInstance()
             val key = database.getReference("board").push().key
             dbRef.child("board").child(key.toString()).setValue(Contents(
+                key.toString(),
                 mAuth.currentUser?.uid.toString(),
                 title.text.toString(),
                 content.text.toString(),
@@ -175,9 +186,40 @@ class BoardRegister : AppCompatActivity() {
                 location!!.longitude
             ))
 
+            if(imageUri!=null){
+                uploadImage(imageUri,key.toString())
+            }
+
             finish()
         }
-        //사용자에 게시판 정보 넣는 것도 하기
-        //이미지 정보 저장도 마저 하기
+
+
     }
+
+    private fun uploadImage(filePath: Uri?, fileName:String){
+        if(filePath != null){
+            val storageReference = FirebaseStorage.getInstance().reference
+
+
+            val imageRef = storageReference.child("images/$fileName")
+
+            imageRef.putFile(filePath)
+                .addOnSuccessListener {
+                    Log.d("이미지 업로드 성공","aa")
+                }
+                .addOnFailureListener{
+                    Log.d("이미지 업로드 실패","aa")
+                }
+
+        }
+    }
+
+    private fun getImageUriFromBitmap(bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(this.contentResolver, bitmap, "Title", null)
+        return Uri.parse(path)
+    }
+
 }
+

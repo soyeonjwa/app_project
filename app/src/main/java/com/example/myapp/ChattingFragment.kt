@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.databinding.FragmentChattingBinding
 import com.example.myapp.databinding.FragmentMapBinding
@@ -37,7 +38,6 @@ class ChattingFragment : Fragment() {
     private lateinit var userList: ArrayList<User>
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +53,13 @@ class ChattingFragment : Fragment() {
         //리스트 초기화
         mDbRef = Firebase.database.reference
 
+        userList = ArrayList()
+
+        adapter = userAdapter(userList, this@ChattingFragment.requireContext())
+
+        binding.userRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.userRecyclerView.adapter = adapter
+
 
         mDbRef.child("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -65,20 +72,20 @@ class ChattingFragment : Fragment() {
                         userList.add(currentUser!!)
                     }
 
+                    //Toast.makeText(this@ChattingFragment.requireActivity(), currentUser.toString(), Toast.LENGTH_SHORT).show()
+
+
                 }
                 adapter.notifyDataSetChanged()
-
+                //Toast.makeText(this@ChattingFragment.requireActivity(), "success", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@ChattingFragment.requireActivity(), userList.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 //실패시 실행
+                //Toast.makeText(this@ChattingFragment.requireActivity(), "fail", Toast.LENGTH_SHORT).show()
             }
         })
-
-        adapter = userAdapter(userList, requireContext())
-
-        binding.userRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.userRecyclerView.adapter = userAdapter(userList, requireContext())
 
 
 

@@ -1,5 +1,7 @@
 package com.example.myapp.board
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.LiveData
@@ -10,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 class Repo {
     fun getData(): LiveData<MutableList<Contents>> {
@@ -34,4 +37,5 @@ class Repo {
         })
         return mutableData
     }
+
 }
