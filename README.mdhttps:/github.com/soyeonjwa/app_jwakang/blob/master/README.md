@@ -16,13 +16,17 @@
 팀원 소개
 ---
 강필재: 채팅 관련 부분 구현
+
 좌소연: 지도, 게시물 관련 부분 구현
 
 구현
 ---
 코틀린
+
 google maps API
+
 firebase
+
 
 앱 사용 방법
 ---
@@ -55,7 +59,7 @@ register 버튼을 클릭해 회원가입을 한 후 아이디와 비밀번호�
 <img width="375" alt="스크린샷 2023-04-30 오전 5 50 33" src="https://user-images.githubusercontent.com/81522548/235324980-2bc14fda-acae-4275-a021-15c6c0dcb1fa.png">
 <img width="375" alt="스크린샷 2023-04-30 오전 5 50 39" src="https://user-images.githubusercontent.com/81522548/235324988-a40042ef-b55c-4ee1-af1d-376c435bba0c.png">
 
-####4. 지도 화면
+4. 지도 화면
 
 <img width="375" alt="스크린샷 2023-04-30 오전 5 50 46" src="https://user-images.githubusercontent.com/81522548/235325002-f4e8e436-22ab-4761-8c93-05276060f278.png">
 
