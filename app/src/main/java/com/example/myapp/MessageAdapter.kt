@@ -18,15 +18,14 @@ class MessageAdapter(private val context : Context, private val messageList : Ar
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return if(viewType == 1){
-
             val view : View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             ReceiveViewHolder(view)
         }
         else {
-
             val view : View = LayoutInflater.from(context).inflate(R.layout.send, parent, false)
             SendViewHolder(view)
         }
+
 
     }
 
